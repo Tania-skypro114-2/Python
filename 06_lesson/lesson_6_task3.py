@@ -5,18 +5,20 @@ from selenium.webdriver.support import expected_conditions as EC
 
 
 driver = webdriver.Chrome()
+waiter = WebDriverWait(driver, 20)
 
 
 driver.get(
     "https://bonigarcia.dev/selenium-webdriver-java/loading-images.html")
 
 
-time = WebDriverWait(driver, 30).until(
-    EC.visibility_of_element_located((By.CSS_SELECTOR, '#landscape')))
+waiter.until(EC.presence_of_all_elements_located(
+    (By.CSS_SELECTOR, "#landscape")))
 
 
-art = driver.find_element(By.ID, 'award')
-print(art.get_attribute('src'))
+art = driver.find_elements(By.CSS_SELECTOR, 'img')
+
+print(art[3].get_attribute('src'))
 
 
 driver.quit()
