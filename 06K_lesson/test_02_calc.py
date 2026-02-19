@@ -23,7 +23,7 @@ def test_calc():
     waiter = WebDriverWait(driver, 45)
     waiter.until(
         EC.text_to_be_present_in_element((By.CSS_SELECTOR, '.screen'), '15'))
-
-    assert 1
+    summa = driver.find_element(By.CSS_SELECTOR, '.screen').text
+    assert summa == '15'
 
     driver.quit()
