@@ -20,16 +20,13 @@ class CalcPage:
         dl.clear()
         dl.send_keys(value)
 
-    def click(self):
-        self.driver.find_element(By.XPATH, '//span[text()="7"]').click()
-        self.driver.find_element(By.XPATH, '//span[text()="+"]').click()
-        self.driver.find_element(By.XPATH, '//span[text()="8"]').click()
-        self.driver.find_element(By.XPATH, '//span[text()="="]').click()
+    def click_button(self, value):
+        self.driver.find_element(By.XPATH, f'//span[text()="{value}"]').click()
 
-    def result(self):
+    def result(self, expected_result):
         waiter = WebDriverWait(self.driver, 45)
         waiter.until(
             EC.text_to_be_present_in_element(
-                (By.CSS_SELECTOR, '.screen'), '15'))
+                (By.CSS_SELECTOR, 'div.screen'), expected_result))
         result = self.driver.find_element(By.CSS_SELECTOR, '.screen').text
         return result

@@ -15,16 +15,16 @@ class AddressPage:
 
     def address_form(self):
         for field, value in self.fields.items():
-            self.wait.until(EC.presence_of_element_located(
+            self.wait.until(EC.visibility_of_element_located(
                 (By.ID, field))).send_keys(value)
 
     def continue_click(self):
-        self.wait.until(EC.presence_of_element_located(
+        self.wait.until(EC.visibility_of_element_located(
             (By.CSS_SELECTOR, '#continue'))).click()
 
     def total_summary(self):
         self.wait.until(
-            EC.presence_of_element_located((
+            EC.visibility_of_element_located((
                 By.CLASS_NAME, 'summary_total_label')))
         total = self.driver.find_element(
             By.CLASS_NAME, 'summary_total_label').text

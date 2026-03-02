@@ -15,6 +15,8 @@ def test_calc(driver):
     calc_page = CalcPage(driver)
     calc_page.open()
     calc_page.delay("45")
-    calc_page.click()
-    summa = calc_page.result()
-    assert summa == "15"
+    calc_page.click_button("7")
+    calc_page.click_button("+")
+    calc_page.click_button("8")
+    calc_page.click_button("=")
+    assert calc_page.result("15")

@@ -48,7 +48,3 @@ class FormaPage:
             if "success" not in self.class_element(field):
                 return False
         return True
-
-    def check_form_submission(self):
-        assert self.check_zip_code()
-        assert self.check_fields_green()

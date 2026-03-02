@@ -16,4 +16,5 @@ def test_forma(driver):
     forma_page.open()
     forma_page.fill_form()
     forma_page.submit()
-    forma_page.check_form_submission()
+    assert forma_page.check_zip_code()
+    assert forma_page.check_fields_green()
