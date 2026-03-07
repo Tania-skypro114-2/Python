@@ -1,7 +1,11 @@
 from sqlalchemy import create_engine, text
+from dotenv import load_dotenv
+import os
 
 
-connection_string = "postgresql://postgres:13znenf@localhost:5432/postgres"
+load_dotenv()
+
+connection_string = os.getenv("DATABASE_URL")
 pg = create_engine(connection_string)
 
 
