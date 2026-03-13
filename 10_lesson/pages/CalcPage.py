@@ -20,16 +20,16 @@ class CalcPage:
             'slow-calculator.html'
         )
 
-    @allure.step("Установка задержки {value} секунд")
-    def delay(self, value):
+    @allure.step("Установка задержки {delay} секунд")
+    def delay(self, delay):
         """
         Устанавливает задержку для выполнения операций на калькуляторе.
-        :param value: int — время задержки в секундах.
+        :param delay: int — время задержки в секундах.
         """
         dl = self.wait.until(
             EC.presence_of_element_located((By.CSS_SELECTOR, "#delay")))
         dl.clear()
-        dl.send_keys(value)
+        dl.send_keys(delay)
 
     @allure.step("Нажатие кнопки '{value}'")
     def click_button(self, value):
@@ -38,16 +38,22 @@ class CalcPage:
         """
         self.driver.find_element(By.XPATH, f'//span[text()="{value}"]').click()
 
-    @allure.step("Получение результата '{expected_result}'")
-    def result(self, expected_result):
-        """Ожидает появления ожидаемого результата на экране калькулярора.
-        Возвращает текущий результат с экрана калькулятора.
+    @allure.step("Ожидание результата '{expected_result}'")
+    def wait_for_result(self, expected_result, delay):
+        """
+        Ожидает появления ожидаемого результата на экране калькулятора.
         :param expected_result: str — ожидаемый результат.
+        :param delay: int — время задержки в секундах.
+        """
+        WebDriverWait(self.driver, delay).until(
+            EC.text_to_be_present_in_element((
+                By.CLASS_NAME, "screen"), expected_result)
+        )
+
+    @allure.step("Получение результата с экрана калькулятора")
+    def get_result(self):
+        """
+        Возвращает текущий результат с экрана калькулятора.
         :return: str — текст результата на экране калькулятора.
         """
-        waiter = WebDriverWait(self.driver, 45)
-        waiter.until(
-            EC.text_to_be_present_in_element(
-                (By.CSS_SELECTOR, 'div.screen'), expected_result))
-        result = self.driver.find_element(By.CSS_SELECTOR, '.screen').text
-        return result
+        return self.driver.find_element(By.CLASS_NAME, "screen").text

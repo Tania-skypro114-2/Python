@@ -27,11 +27,13 @@ def test_calc(driver):
     with allure.step("Открытие страницы калькулятора"):
         calc_page.open()
     with allure.step("Установка задержки"):
-        calc_page.delay("45")
+        calc_page.delay(45)
     with allure.step("Нажатие кнопок"):
         calc_page.click_button("7")
         calc_page.click_button("+")
         calc_page.click_button("8")
         calc_page.click_button("=")
+    with allure.step("Ожидание результата"):
+        calc_page.wait_for_result('15', 45)
     with allure.step("Проверка результата"):
-        assert calc_page.result("15")
+        assert calc_page.get_result() == '15'
